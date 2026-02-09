@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý đội bóng</title>
+</head>
+<body>
+    <h2>Quản lý đội bóng</h2>
+    <pre id="output"></pre>
+
+    <script>
+        let playerIds = ["P001", "P002", "P003", "P004", "P005"];
+        let playerNames = [
+            "Nguyễn Văn A",
+            "Trần Thị B",
+            "Lê Văn C",
+            "Phạm Văn D",
+            "Hoàng Thị E"
+        ];
+        let playerJerseyNumbers = [10, 7, 8, 9, 11];
+
+        function printTeamRoster() {
+            let text = "Danh sách cầu thủ:\n";
+            for (let i = 0; i < playerIds.length; i++) {
+                text += `${i + 1}. ${playerIds[i]} - ${playerNames[i]} - Số áo: ${playerJerseyNumbers[i]}\n`;
+            }
+            return text;
+        }
+
+        function updatePlayerNameAndJersey(playerId, newName, newJerseyNumber) {
+            let index = playerIds.indexOf(playerId);
+
+            if (index === -1) {
+                return false;
+            }
+
+            playerNames[index] = newName;
+            playerJerseyNumbers[index] = newJerseyNumber;
+            return true;
+        }
+
+        let output = "";
+        output += printTeamRoster();
+
+        let id = prompt("Nhập mã cầu thủ muốn cập nhật (ví dụ: P001):");
+
+        if (playerIds.includes(id)) {
+            let newName;
+            do {
+                newName = prompt("Nhập tên mới cho cầu thủ:");
+            } while (newName.trim() === "");
+
+            let newJersey;
+            do {
+                newJersey = parseInt(prompt("Nhập số áo mới (1 - 99):"));
+            } while (isNaN(newJersey) || newJersey < 1 || newJersey > 99);
+
+            let success = updatePlayerNameAndJersey(id, newName, newJersey);
+
+            if (success) {
+                output += "\nCập nhật thành công!\n\n";
+                output += printTeamRoster();
+            }
+        } else {
+            output += "\nKhông tìm thấy cầu thủ với mã này!";
+        }
+
+        document.getElementById("output").innerText = output;
+        console.log(output);
+    </script>
+</body>
+</html>
