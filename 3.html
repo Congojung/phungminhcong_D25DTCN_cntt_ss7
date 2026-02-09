@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý đội bóng - 1 mảng</title>
+</head>
+<body>
+    <h2>Quản lý đội bóng (1 mảng duy nhất)</h2>
+    <pre id="output"></pre>
+
+    <script>
+
+        let players = [];
+
+        function positionName(pos) {
+            switch (pos) {
+                case 1: return "Thủ môn";
+                case 2: return "Hậu vệ";
+                case 3: return "Tiền vệ";
+                case 4: return "Tiền đạo";
+                default: return "Không xác định";
+            }
+        }
+
+        function pushPlayer(code, name, position) {
+            let playerString = code + "-" + name + "-" + position;
+            players.push(playerString);
+        }
+
+        function printTeamRoster() {
+            let text = "Danh sách cầu thủ:\n";
+            for (let i = 0; i < players.length; i++) {
+                let parts = players[i].split("-");
+                let code = parts[0];
+                let name = parts[1];
+                let position = parts[2];
+
+                text += `${i + 1}. Mã: ${code}, Tên: ${name}, Vị trí: ${position}\n`;
+            }
+            return text;
+        }
+
+        let n;
+        do {
+            n = parseInt(prompt("Có bao nhiêu cầu thủ cần nhập vào đội bóng?"));
+        } while (isNaN(n) || n <= 0);
+
+        for (let i = 0; i < n; i++) {
+            let code;
+            let isDuplicate;
+
+            do {
+                isDuplicate = false;
+                code = prompt(`Nhập mã cầu thủ ${i + 1}:`).trim();
+
+                for (let p of players) {
+                    if (p.startsWith(code + "-")) {
+                        isDuplicate = true;
+                        alert("Mã cầu thủ đã tồn tại!");
+                        break;
+                    }
+                }
+            } while (code === "" || isDuplicate);
+
+            let name;
+            do {
+                name = prompt("Nhập tên cầu thủ:").trim();
+            } while (name === "");
+
+            let pos;
+            do {
+                pos = parseInt(
+                    prompt("Nhập vị trí (1: Thủ môn, 2: Hậu vệ, 3: Tiền vệ, 4: Tiền đạo):")
+                );
+            } while (![1, 2, 3, 4].includes(pos));
+
+            pushPlayer(code, name, positionName(pos));
+        }
+
+        let output = printTeamRoster();
+        document.getElementById("output").innerText = output;
+        console.log(output);
+    </script>
+</body>
+</html>
