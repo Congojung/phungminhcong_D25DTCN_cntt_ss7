@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Xử lý đội bóng - nâng cao</title>
+</head>
+<body>
+    <h2>Kết quả xử lý đội bóng</h2>
+    <pre id="output"></pre>
+
+    <script>
+        let players = [
+            "P001-Nguyễn Văn A-Thủ môn",
+            "P002-Trần Thị B-Hậu vệ",
+            "P003-Lê Văn C-Hậu vệ",
+            "P004-Phạm Văn D-Tiền vệ",
+            "P005-Hoàng Thị E-Tiền đạo",
+            "P006-Vũ Minh F-Tiền đạo",
+            "P007-Đặng Văn G-Thủ môn"
+        ];
+
+        function getAllPositions() {
+            let positions = [];
+
+            players.forEach(player => {
+                let position = player.split("-")[2];
+                if (!positions.includes(position)) {
+                    positions.push(position);
+                }
+            });
+
+            return positions;
+        }
+
+        function findPlayersWithLongestName() {
+            let longestName = "";
+
+            players.forEach(player => {
+                let name = player.split("-")[1];
+                if (name.length > longestName.length) {
+                    longestName = name;
+                }
+            });
+
+            return longestName;
+        }
+
+        function countPlayersStartingWithLetter(letter) {
+            let count = 0;
+            let target = letter.toLowerCase();
+
+            players.forEach(player => {
+                let name = player.split("-")[1];
+                if (name[0].toLowerCase() === target) {
+                    count++;
+                }
+            });
+
+            return count;
+        }
+
+        let output = "";
+
+        output += "Các vị trí trong đội:\n";
+        output += getAllPositions().join(", ") + "\n\n";
+
+        output += "Cầu thủ có tên dài nhất:\n";
+        output += findPlayersWithLongestName() + "\n\n";
+
+        output += "Số cầu thủ có tên bắt đầu bằng chữ 'H': ";
+        output += countPlayersStartingWithLetter("H");
+
+        document.getElementById("output").innerText = output;
+        console.log(output);
+    </script>
+</body>
+</html>
