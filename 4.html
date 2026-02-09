@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Xử lý đội bóng - 1 mảng</title>
+</head>
+<body>
+    <h2>Danh sách đội bóng</h2>
+    <pre id="output"></pre>
+
+    <script>
+
+        let players = [
+            "P001-Nguyễn Văn A-Thủ môn",
+            "P002-Trần Thị B-Hậu vệ",
+            "P003-Lê Văn C-Hậu vệ",
+            "P004-Phạm Văn D-Tiền vệ",
+            "P005-Hoàng Thị E-Tiền đạo",
+            "P006-Vũ Minh F-Tiền đạo",
+            "P007-Đặng Văn G-Thủ môn"
+        ];
+
+        function printTeamRoster() {
+            let text = "Danh sách cầu thủ:\n";
+            players.forEach((player, index) => {
+                let parts = player.split("-");
+                let ma = parts[0];
+                let ten = parts[1];
+                let viTri = parts[2];
+
+                text += `${index + 1}. Mã: ${ma} | Tên: ${ten} | Vị trí: ${viTri}\n`;
+            });
+            return text;
+        }
+
+        function countPlayerByPosition(players) {
+            let count = {};
+
+            players.forEach(player => {
+                let viTri = player.split("-")[2];
+                count[viTri] = (count[viTri] || 0) + 1;
+            });
+
+            return count;
+        }
+
+        function hasGoalkeeper() {
+            return players.some(player => player.endsWith("Thủ môn"));
+        }
+
+        let output = "";
+
+        output += printTeamRoster() + "\n";
+
+        let countResult = countPlayerByPosition(players);
+        output += "Số lượng cầu thủ theo vị trí:\n";
+        for (let position in countResult) {
+            output += `${position}: ${countResult[position]}\n`;
+        }
+
+        output += "\nĐội có thủ môn không? ";
+        output += hasGoalkeeper() ? "true" : "false";
+
+        document.getElementById("output").innerText = output;
+        console.log(output);
+    </script>
+</body>
+</html>
